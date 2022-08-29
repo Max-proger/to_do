@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
 from .serializers import ProjectModelSerializer, ToDoModelSerializer
 from .models import Project, ToDo
@@ -19,6 +20,7 @@ class ProjectModelViewSet(ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
     pagination_class = ProjectPagination
+    permission_classes = IsAuthenticated
 
     def get_queryset(self):
         queryset = Project.objects.all()
@@ -37,6 +39,7 @@ class ToDoModelViewSet(ModelViewSet):
     serializer_class = ToDoModelSerializer
     pagination_class = ToDoPagination
     filterset_class = ToDoFilter
+    permission_classes = IsAuthenticated
 
     def destroy(self, request, *args, **kwargs):
         try:

@@ -46,3 +46,5 @@ const ToDoList = ({items}) => {
         </table>
     )
 }
+
+export default ToDoList
