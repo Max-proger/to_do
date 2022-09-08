@@ -7,3 +7,9 @@ class UserModelSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'date_creation')
+
+
+class UserModelSerializerStatus(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('is_superuser', 'is_staff')
