@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
 
     # main
     'rest_framework',
@@ -47,8 +48,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'todo_projectapp',
     'rest_framework.authtoken',
-    'django.contrib.staticfiles',
     'drf_yasg',
+
 ]
 
 MIDDLEWARE = [
@@ -162,4 +163,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PGE_SIZE': 100,
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+}
+
+GRAPHENE = {
+    "SCHEMA": "todo.schema.schema"
 }
