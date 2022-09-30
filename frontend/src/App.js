@@ -97,6 +97,37 @@ class App extends React.Component{
             })
 
     }
+    deleteProject(id) {
+        const headers = this.get_headers()
+        axios.delete('http://127.0.0.1:8000/api/projects/${id}', {headers, headers}).then(response => {
+            this.setState({projects: this.state.projects.filter((item)=>item.id !==id)})
+        }).catch(error => console.log(error))
+    }
+    deleteToDo(id) {
+        const headers = this.get_headers()
+        axios.delete('http://127.0.0.1:8000/api/todos/${id}', {headers, headers}).then(response => {
+            this.setState({todos: this.state.todos.filter((item)=>item.id !==id)})
+        }).catch(error => console.log(error))
+    }
+
+    createProject(name, repository){
+        const headers = this.get_headers()
+        const data = {name: name, repository: repository}
+        axios.post('http://127.0.0.1:8000/api/projets/', data, {headers, headers}).then(response => {
+            let new_project = response.data
+            this.setState({projects: [...this.state.books, new_project]})
+        }).catch(error => console.log(error))
+    }
+
+    createToDo(project, note_creator, txt, update_date, active){
+        const headers = this.get_headers()
+        const data = {project: project, note_creator: note_creator, txt: txt, update_date: update_date, active: active}
+        axios.post('http://127.0.0.1:8000/api/todos/', data, {headers, headers}).then(response => {
+            let new_todo = response.data
+            this.setState({projects: [...this.state.todos, new_todo]})
+        }).catch(error => console.log(error))
+    }
+
     componentDidMount() {
         this.get_token_from_storage()
     }
@@ -116,11 +147,13 @@ class App extends React.Component{
                             <UserList users={this.state.users}/>
                         </Route>
                         <Route exact path='/projects'>
-                            <ProjectList items={this.state.projects}/>
+                            <ProjectList items={this.state.projects} deleteProject={(id)=>this.deleteProject(id)/>}/>
                         </Route>
+                        <Route exact path='/projects/create' component={() => <ProjectForm />}/>
                         <Route exact path='/todos'>
-                            <ToDoList items={this.state.todos}/>
+                            <ToDoList items={this.state.todos} deleteToDo={(id)=>this.deleteToDo(id)/>}/>
                         </Route>
+                        <Route exact path='/todos/create' component={() => <ToDoForm />}/>
                         <Route exact path='/login'>
                             <LoginForm get_token={(username, password) => this.get_token(username, password)}/>
                         </Route>
